@@ -1,0 +1,13 @@
+name: Self repository reference probe
+description: Verify native self repository action resolution without checkout
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      env:
+        ACTION_REPOSITORY: ${{ github.action_repository }}
+        ACTION_REF: ${{ github.action_ref }}
+      run: |
+        test "$ACTION_REPOSITORY" = civitaspo/testing-securefix-server
+        test -n "$ACTION_REF"
+        echo "Native self reference resolved to $ACTION_REPOSITORY at $ACTION_REF"
