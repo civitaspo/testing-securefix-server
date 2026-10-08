@@ -1,0 +1,12 @@
+name: Verify Securefix Server Candidate
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  verify:
+    permissions:
+      actions: read
+      contents: read
+    uses: civitaspo/securefix-server/.github/workflows/testing-securefix-server.yml@a05b271419999f44ee6b1bb3326f49c121f284a6
+    secrets:
+      SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
