@@ -42,11 +42,24 @@ jobs:
     runs-on: ubuntu-24.04
     permissions:
       contents: write
+      attestations: read
     steps:
       - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
         with:
           artifact-ids: ${{ needs.produce.outputs.artifact-id }}
           merge-multiple: true
+      - name: Verify the producer archive before publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SOURCE_SHA: ${{ job.workflow_sha }}
+        run: >-
+          gh attestation verify securefix-runtime-linux-x86_64.tar.gz
+          --repo civitaspo/testing-securefix-server --source-digest "$SOURCE_SHA"
+          --source-ref refs/heads/main
+          --signer-workflow civitaspo/testing-securefix-server/.github/workflows/runtime-smoke.yml
+          --signer-digest "$SOURCE_SHA"
+          --cert-oidc-issuer https://token.actions.githubusercontent.com
+          --predicate-type https://slsa.dev/provenance/v1 --deny-self-hosted-runners
       - name: Publish only the harmless scratch archive
         env:
           GH_TOKEN: ${{ github.token }}
@@ -87,5 +100,5 @@ jobs:
           test "$(cat verified/source-sha)" = "$SOURCE_SHA"
       - name: Read another public repository using only this repository token
         run: |
-          gh release download v2.102.0 --repo cli/cli --pattern gh_2.102.0_checksums.txt --dir cross-repo
-          gh attestation verify cross-repo/gh_2.102.0_checksums.txt --repo cli/cli --cert-oidc-issuer https://token.actions.githubusercontent.com --deny-self-hosted-runners
+          gh release download v2.102.0 --repo cli/cli --pattern gh_2.102.0_linux_amd64.tar.gz --dir cross-repo
+          gh attestation verify cross-repo/gh_2.102.0_linux_amd64.tar.gz --repo cli/cli --cert-oidc-issuer https://token.actions.githubusercontent.com --deny-self-hosted-runners
