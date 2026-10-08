@@ -54,7 +54,7 @@ jobs:
           private-key: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
           owner: civitaspo
           repositories: testing-securefix-server
-          permission-contents: read
+          permission-metadata: read
       - name: Verify the token can access exactly the scratch repository
         env:
           SECUREFIX_LIVE_TEST_REPOSITORY: civitaspo/testing-securefix-server
