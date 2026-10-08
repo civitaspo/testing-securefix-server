@@ -1,0 +1,62 @@
+name: Client App credential smoke test
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  build:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    outputs:
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: civitaspo/securefix-server
+          ref: 678e10c6d968b17cb967b5a3589f40f7aae6cf65
+          persist-credentials: false
+      - run: rustup toolchain install 1.99.0 --profile minimal
+      - name: Build the read-only installation probe without credentials
+        shell: bash -euo pipefail {0}
+        run: |
+          test_binary="$(cargo +1.99.0 test --locked --test github_api --no-run --message-format=json | jq -r 'select(.reason == "compiler-artifact" and .target.name == "github_api" and .executable != null) | .executable')"
+          install -Dm755 "$test_binary" runtime/github-api-tests
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        id: upload
+        with:
+          name: client-app-probe-${{ github.run_id }}-${{ github.run_attempt }}
+          path: runtime/github-api-tests
+          if-no-files-found: error
+          retention-days: 1
+
+  probe:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: read
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4.3.0
+        with:
+          artifact-ids: ${{ needs.build.outputs.artifact-id }}
+          merge-multiple: true
+          path: runtime
+      - run: chmod +x runtime/github-api-tests
+      - uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        id: client
+        with:
+          app-id: '3872492'
+          private-key: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
+          owner: civitaspo
+          repositories: testing-securefix-server
+          permission-contents: read
+      - name: Verify the token can access exactly the scratch repository
+        env:
+          SECUREFIX_LIVE_TEST_REPOSITORY: civitaspo/testing-securefix-server
+          SECUREFIX_CLIENT_INSTALLATION_TOKEN: ${{ steps.client.outputs.token }}
+        run: runtime/github-api-tests client_app_token_is_scoped_to_scratch_repository --exact --ignored --nocapture
