@@ -1,0 +1,2 @@
+candidate=7716889a93e77c014b6332ffa46bc16b5a293a18
+scenario=approval
