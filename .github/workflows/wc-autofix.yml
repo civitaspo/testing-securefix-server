@@ -1,0 +1,104 @@
+name: Workflow Autofix (workflow_call)
+
+on:
+  workflow_call:
+    secrets:
+      SECUREFIX_CLIENT_PRIVATE_KEY:
+        required: false
+
+permissions: {}
+
+jobs:
+  autofix:
+    runs-on: ubuntu-24.04
+    permissions:
+      actions: read
+      contents: read
+      attestations: read
+    env:
+      SECUREFIX_CLIENT_APP_ID: 3872492
+      SECUREFIX_SERVER_REPOSITORY: civitaspo/testing-securefix-server
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Force tracked workflow fixture change
+        run: printf '\n# Scratch native client integration\n' >> .github/workflows/ci.yml
+      - name: Detect automated fixes
+        id: fixes
+        run: |
+          if git diff --quiet -- .github/workflows; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Capture Securefix files
+        id: securefix-files
+        if: steps.fixes.outputs.changed == 'true'
+        run: |
+          git ls-files --modified --deleted --others --exclude-standard --deduplicate -z > "$RUNNER_TEMP/securefix-files"
+          mapfile -d '' -t files < "$RUNNER_TEMP/securefix-files"
+          ((${#files[@]} > 0)) || { echo 'changed files are missing' >&2; exit 1; }
+          for file in "${files[@]}"; do
+          [[ "$file" != *$'\n'* && "$file" != *$'\r'* && "$file" != ' '* && "$file" != *' ' && "$file" != $'\t'* && "$file" != *$'\t' ]] || { echo 'changed file path cannot be represented' >&2; exit 1; }
+          done
+          delimiter=securefix-files
+          while printf '%s\n' "${files[@]}" | grep -Fqx -- "$delimiter"; do delimiter="${delimiter}x"; done
+          { printf 'files<<%s\n' "$delimiter"; printf '%s\n' "${files[@]}"; printf '%s\n' "$delimiter"; } >> "$GITHUB_OUTPUT"
+
+      - name: Prepare exact scratch client input
+        env:
+          SECUREFIX_SCRATCH_POLICY_BASE64: "ewogICJjbGllbnRfYm90X2lkIjogMjg4MDY4MjAzLAogICJkZWZhdWx0X3NlbnNpdGl2ZV9wYXRocyI6IFsKICAgICIuZ2l0aHViL3dvcmtmbG93cy8qKiIsCiAgICAiLmdpdGh1Yi9hY3Rpb25zLyoqIiwKICAgICIqKi9DYXJnby50b21sIiwKICAgICIqKi9DYXJnby5sb2NrIiwKICAgICIqKi9nby5tb2QiLAogICAgIioqL2dvLnN1bSIsCiAgICAiKiovcGFja2FnZS5qc29uIiwKICAgICIqKi9wYWNrYWdlLWxvY2suanNvbiIsCiAgICAiKiovcG5wbS1sb2NrLnlhbWwiLAogICAgIioqL3lhcm4ubG9jayIsCiAgICAiKiovcHlwcm9qZWN0LnRvbWwiLAogICAgIioqL3V2LmxvY2siLAogICAgIioqL3JlcXVpcmVtZW50cyoudHh0IiwKICAgICIqKi9taXNlLnRvbWwiLAogICAgIioqLy5taXNlLnRvbWwiLAogICAgIioqL21pc2UubG9jayIsCiAgICAiKiovLm1pc2UubG9jayIsCiAgICAiKiovTWFrZWZpbGUiLAogICAgIioqL0RvY2tlcmZpbGUqIiwKICAgICIuZ29yZWxlYXNlci4qIiwKICAgICJzY3JpcHRzLyoqIiwKICAgICIqKi9idWlsZC5ycyIsCiAgICAiLmNhcmdvLyoqIiwKICAgICIqKi8uY2FyZ28vKioiCiAgXSwKICAiZGVwbG95bWVudCI6IHsKICAgICJhcHByb3ZhbF9yZXZpZXdlciI6IHsKICAgICAgImlkIjogMzA4Njk2NjgzLAogICAgICAibG9naW4iOiAiY2l2aXRhc3BvLWJvdCIKICAgIH0sCiAgICAiY2hlY2tzIjogewogICAgICAicG9saWN5X2FwcF9pZCI6IDM4NzI1MzMsCiAgICAgICJzdGF0dXNfYXBwX2lkIjogMTUzNjgKICAgIH0sCiAgICAiY2xpZW50X2FwcF9pZCI6IDM4NzI0OTIsCiAgICAiY2xpZW50X2JvdF9sb2dpbiI6ICJjaXZpdGFzcG8tc2VjdXJlZml4LWNsaWVudFtib3RdIiwKICAgICJpbnRlZ3JhdGlvbiI6IHsKICAgICAgImRlZmF1bHRfYnJhbmNoIjogIm1haW4iLAogICAgICAiaWQiOiAxMjUwMDc5NDI1LAogICAgICAicmVwb3NpdG9yeSI6ICJjaXZpdGFzcG8vc2VjdXJlZml4LXNlcnZlciIKICAgIH0sCiAgICAib3duZXJfbG9naW4iOiAiY2l2aXRhc3BvIiwKICAgICJyZWxlYXNlX2JyYW5jaCI6ICJyZWxlYXNlL25leHQiLAogICAgInJlcG9zaXRvcnlfb3duZXIiOiB7CiAgICAgICJpZCI6IDQ1MjU1MDAsCiAgICAgICJsb2dpbiI6ICJjaXZpdGFzcG8iCiAgICB9LAogICAgInJ1bnRpbWVfdXBkYXRlX2JyYW5jaCI6ICJhdXRvbWF0aW9uL3NlY3VyZWZpeC1ydW50aW1lIiwKICAgICJzZXJ2ZXIiOiB7CiAgICAgICJkZWZhdWx0X2JyYW5jaCI6ICJtYWluIiwKICAgICAgImlkIjogMTQxMDMxMjU1NiwKICAgICAgInJlcG9zaXRvcnkiOiAiY2l2aXRhc3BvL3Rlc3Rpbmctc2VjdXJlZml4LXNlcnZlciIKICAgIH0sCiAgICAic2VydmVyX2FwcF9pZCI6IDM4NzI1MzMsCiAgICAic2VydmVyX2JvdF9sb2dpbiI6ICJjaXZpdGFzcG8tc2VjdXJlZml4LXNlcnZlcltib3RdIgogIH0sCiAgIm1lcmdlX2NvbnRyb2xzX2VuYWJsZWQiOiB0cnVlLAogICJvd25lcl9pZCI6IDQ1MjU1MDAsCiAgInJlcG9zaXRvcmllcyI6IFsKICAgIHsKICAgICAgImNhcGFiaWxpdGllcyI6IFsKICAgICAgICAic2VjdXJlZml4IgogICAgICBdLAogICAgICAicHJvdGVjdF90YWdzIjogZmFsc2UsCiAgICAgICJyZWxlYXNlIjogbnVsbCwKICAgICAgInJlcG9zaXRvcnkiOiAiY2l2aXRhc3BvL3Rlc3Rpbmctc2VjdXJlZml4LXNlcnZlciIKICAgIH0KICBdLAogICJzZXJ2ZXJfYm90X2lkIjogMjg4MDY5MDE5LAogICJ0cnVzdGVkX2NvbW1pdHRlcnMiOiBbCiAgICAiY2l2aXRhc3BvIiwKICAgICJjdXJzb3JhZ2VudCIsCiAgICAiY2l2aXRhc3BvLXNlY3VyZWZpeC1zZXJ2ZXJbYm90XSIsCiAgICAicmVub3ZhdGVbYm90XSIsCiAgICAiZGVwZW5kYWJvdFtib3RdIgogIF0sCiAgInZlcnNpb24iOiAxCn0="
+        run: |
+          printf '%s' "$SECUREFIX_SCRATCH_POLICY_BASE64" | base64 --decode > scratch-policy.json
+      - name: Create Securefix client token
+        id: securefix-client-token
+        if: "steps.fixes.outputs.changed == 'true' && env.SECUREFIX_CLIENT_APP_ID != '' && env.SECUREFIX_SERVER_REPOSITORY != ''"
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          app-id: "3872492"
+          private-key: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
+          owner: "civitaspo"
+          repositories: "testing-securefix-server"
+          permission-issues: write
+
+      - name: "Request Securefix commit"
+        id: native-client-action
+        if: "steps.fixes.outputs.changed == 'true' && env.SECUREFIX_CLIENT_APP_ID != '' && env.SECUREFIX_SERVER_REPOSITORY != ''"
+        uses: "civitaspo/securefix-server/.github/actions/client@65fddf02de6f2669ea4938e05cb219506165396a" # v0.2.0
+        with:
+          runtime-sha: 65fddf02de6f2669ea4938e05cb219506165396a
+          server-repository: "civitaspo/testing-securefix-server"
+          runtime-repository: "civitaspo/securefix-server"
+          runtime-default-branch: "main"
+          policy-path: scratch-policy.json
+          repository: "civitaspo/testing-securefix-server"
+          branch: securefix-client-smoke-${{ github.run_id }}
+          client-token: ${{ steps.securefix-client-token.outputs.token }}
+          files: ${{ steps.securefix-files.outputs.files }}
+          commit-message: "ci: apply workflow security fixes"
+
+      - name: Verify scratch client action outputs
+        env:
+          ARTIFACT_NAME: ${{ steps.native-client-action.outputs.artifact-name }}
+          SOURCE_LABEL: ${{ steps.native-client-action.outputs.source-label }}
+          RUNTIME_SOURCE: ${{ steps.native-client-action.outputs.runtime-source }}
+          CLIENT_TOKEN: ${{ steps.securefix-client-token.outputs.token }}
+          GH_TOKEN: ${{ github.token }}
+          EXPECTED_REPOSITORY: "civitaspo/testing-securefix-server"
+        run: |
+          set -euo pipefail
+          test -n "$ARTIFACT_NAME"
+          test "$ARTIFACT_NAME" = "$SOURCE_LABEL"
+          test "$RUNTIME_SOURCE" = attested-release
+          test "$GITHUB_REPOSITORY" = "$EXPECTED_REPOSITORY"
+          gh api "/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/artifacts?per_page=100" | jq -e --arg name "$ARTIFACT_NAME" '.artifacts | map(select(.name == $name and .expired == false and .size_in_bytes > 0 and .size_in_bytes <= 16777216)) | length == 1' >/dev/null
+          label="$(GH_TOKEN="$CLIENT_TOKEN" gh api "/repos/$GITHUB_REPOSITORY/labels/$SOURCE_LABEL")"
+          printf '%s' "$label" | jq -e --arg name "$SOURCE_LABEL" --arg description "$GITHUB_REPOSITORY/$GITHUB_RUN_ID" '.name == $name and .description == $description' >/dev/null
+          GH_TOKEN="$CLIENT_TOKEN" gh api --method DELETE "/repos/$GITHUB_REPOSITORY/labels/$SOURCE_LABEL"
+      - name: Require Securefix configuration
+        if: steps.fixes.outputs.changed == 'true' && (env.SECUREFIX_CLIENT_APP_ID == '' || env.SECUREFIX_SERVER_REPOSITORY == '')
+        run: |
+          echo "Configure SECUREFIX_CLIENT_APP_ID before allowing workflow autofixes." >&2
+          exit 1
