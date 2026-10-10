@@ -1,0 +1,2 @@
+candidate=b9792846657e6026e215ffc5892535145cb2feee
+scenario=stale-head
