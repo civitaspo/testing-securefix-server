@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Bug Fixes
 
+- include subsequent merged change in release PR refresh (#100)
 - include later merged change in release PR refresh (#98)
 
 ## [0.1.0-pre.1] - 2026-10-10
