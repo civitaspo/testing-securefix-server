@@ -2,6 +2,9 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.1] - 2026-10-11
+
+
 ## [0.1.0-pre.1] - 2026-10-10
 
 
