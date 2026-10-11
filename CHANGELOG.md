@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Bug Fixes
 
+- verify approval after the default branch advances (#106)
 - include final merged change in release PR refresh (#102)
 - include subsequent merged change in release PR refresh (#100)
 - include later merged change in release PR refresh (#98)
