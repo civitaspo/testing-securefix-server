@@ -1,1 +1,1 @@
-Normal release PR refresh fixture: include the final merged change.
+Normal default-branch advancement for existing release PR approval validation.
