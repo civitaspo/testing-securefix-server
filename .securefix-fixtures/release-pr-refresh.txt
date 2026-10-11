@@ -1,0 +1,1 @@
+Normal release PR refresh fixture: include a later merged change.
