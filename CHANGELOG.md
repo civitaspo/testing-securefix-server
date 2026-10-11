@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.0-pre.4] - 2026-10-11
+
+
+### Bug Fixes
+
+- include final merged change in release PR refresh (#102)
+- include subsequent merged change in release PR refresh (#100)
+- include later merged change in release PR refresh (#98)
+
+### Miscellaneous
+
+- update Securefix workflows to 7fc4e60f2c093546aaa5ab587e5019d665b62ada (#104)
+
 ## [0.1.0-pre.1] - 2026-10-10
 
 
