@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to 1cbecad0aa082a99021790007255df39aedc5fb7 (#118)
 - update Securefix workflows to a597d89fa36266b261321d2f8f0bf40b997f7cc4 (#114)
 - Securefix stale-head integration 9d92d678cc07 (#112)
 - update Securefix workflows to 7b653de51fd50349cc723aa30b9b00a165be5569 (#110)
