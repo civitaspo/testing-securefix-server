@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented here.
 
-## [0.1.0-pre.4] - 2026-10-14
+## [0.1.0-pre.4] - 2026-10-15
 
 
 ### Bug Fixes
@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to 445955622f4ca4581205057f524edc0d3207225b (#133)
 - update Securefix workflows to 2d9286b7d353521f92f481eabf6acde2d267e27c (#129)
 - update Securefix workflows to 3a93f156cc823b9ddbdf7a529445a26952d7d00f (#125)
 - update Securefix workflows to 1cbecad0aa082a99021790007255df39aedc5fb7 (#118)
