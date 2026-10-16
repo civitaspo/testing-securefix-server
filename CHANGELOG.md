@@ -14,6 +14,9 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to e8e2bc77d96a4e359417217f1d1c22f4e1ac4483 (#155)
+- Securefix artifact parser integration (#151)
+- Securefix artifact parser integration (#141)
 - update Securefix workflows to 4c5dc66e855b03715a161b5166f5a132addb3084 (#139)
 - update Securefix workflows to 18d91c0f4d84f26771db32089db3e2f646f4264f (#137)
 - update Securefix workflows to 445955622f4ca4581205057f524edc0d3207225b (#133)
