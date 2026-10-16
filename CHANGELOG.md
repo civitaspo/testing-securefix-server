@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.0-pre.4] - 2026-10-16
+
+
+### Bug Fixes
+
+- verify approval after the default branch advances (#106)
+- include final merged change in release PR refresh (#102)
+- include subsequent merged change in release PR refresh (#100)
+- include later merged change in release PR refresh (#98)
+
+### Miscellaneous
+
+- update Securefix workflows to e8e2bc77d96a4e359417217f1d1c22f4e1ac4483 (#155)
+- Securefix artifact parser integration (#151)
+- Securefix artifact parser integration (#141)
+- update Securefix workflows to 4c5dc66e855b03715a161b5166f5a132addb3084 (#139)
+- update Securefix workflows to 18d91c0f4d84f26771db32089db3e2f646f4264f (#137)
+- update Securefix workflows to 445955622f4ca4581205057f524edc0d3207225b (#133)
+- update Securefix workflows to 2d9286b7d353521f92f481eabf6acde2d267e27c (#129)
+- update Securefix workflows to 3a93f156cc823b9ddbdf7a529445a26952d7d00f (#125)
+- update Securefix workflows to 1cbecad0aa082a99021790007255df39aedc5fb7 (#118)
+- update Securefix workflows to a597d89fa36266b261321d2f8f0bf40b997f7cc4 (#114)
+- Securefix stale-head integration 9d92d678cc07 (#112)
+- update Securefix workflows to 7b653de51fd50349cc723aa30b9b00a165be5569 (#110)
+- update Securefix workflows to fe227c4b6838cdd3c6a0ae253783365a71545939 (#109)
+- update Securefix workflows to 9eb79e2966e21d27ef629e08a9fd21e0a1198772 (#108)
+- update Securefix workflows to 4a8bcd62df4f2bec3474d5bc8082ce3511f17bb8 (#107)
+- update Securefix workflows to 7fc4e60f2c093546aaa5ab587e5019d665b62ada (#104)
+
 ## [0.1.0-pre.1] - 2026-10-10
 
 
