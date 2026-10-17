@@ -19,6 +19,7 @@ jobs:
       github.event.comment.user.id == 4525500 &&
       github.run_attempt == 1
     permissions:
+      actions: read
       contents: read
       attestations: read
       issues: write
