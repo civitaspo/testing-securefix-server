@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented here.
 
-## [0.1.0-pre.4] - 2026-10-17
+## [0.1.0-pre.4] - 2026-10-18
 
 
 ### Bug Fixes
@@ -14,6 +14,10 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to 673dd9254150a3271b09798481f616900c56191a (#230)
+- controlled Securefix scratch merge
+- controlled Securefix scratch merge
+- controlled Securefix scratch merge
 - update Securefix workflows to 9865421823a451a8a7fe443e1896710971869fbc (#209)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
