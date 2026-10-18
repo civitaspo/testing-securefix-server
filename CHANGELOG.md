@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to 1e2866cbab65c5ef4e218fa6853300c2731e73c0 (#240)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - update Securefix workflows to 673dd9254150a3271b09798481f616900c56191a (#230)
