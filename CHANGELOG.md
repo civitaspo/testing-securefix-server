@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to 18163e82ad5c6938676ab6cf008e765cd0c7383b (#276)
 - propose reviewed isolated control fixture (#272)
 - propose reviewed isolated control fixture (#271)
 - propose reviewed isolated control fixture (#269)
