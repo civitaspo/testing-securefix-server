@@ -30,3 +30,5 @@ jobs:
     uses: civitaspo/securefix-server/.github/workflows/testing-reusable-merge-request.yml@10334dcb2b5f2e119f1b8724660df29c6a2f0f2a # v0.2.34-pre.2
     secrets:
       SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
+
+# testing: deliberately non-canonical migration fixture
