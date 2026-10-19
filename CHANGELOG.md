@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.0-pre.5] - 2026-10-19
+
+
+### Miscellaneous
+
+- verify native pre.9 approval and merge recovery (#289)
+- update Securefix workflows to c1195a11ddf07e324f3fc81aadbb55a6935f0d94 (#288)
+- propose reviewed isolated control fixture (#287)
+- controlled Securefix scratch merge
+- retire obsolete Securefix workflow routes (#279)
+
 ## [0.1.0-pre.4] - 2026-10-19
 
 
