@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- propose reviewed isolated control fixture (#252)
 - restore native callers and add required-check fixture (#251)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
