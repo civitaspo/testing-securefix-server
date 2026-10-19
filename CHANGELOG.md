@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- controlled Securefix scratch merge
 - isolate direct scratch fixtures from native caller automation (#244)
 - update Securefix workflows to 1e2866cbab65c5ef4e218fa6853300c2731e73c0 (#240)
 - controlled Securefix scratch merge
