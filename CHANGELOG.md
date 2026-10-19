@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented here.
 
-## [0.1.0-pre.4] - 2026-10-18
+## [0.1.0-pre.4] - 2026-10-19
 
 
 ### Bug Fixes
@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- isolate direct scratch fixtures from native caller automation (#244)
 - update Securefix workflows to 1e2866cbab65c5ef4e218fa6853300c2731e73c0 (#240)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
