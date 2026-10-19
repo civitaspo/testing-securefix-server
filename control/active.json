@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "generation": 2,
-  "source_sha": "10334dcb2b5f2e119f1b8724660df29c6a2f0f2a",
-  "policy_sha256": "b36d31005bc099b09172af295eeb8b2531c835a6f38cebebf9891498fc5b96ef",
-  "archive_sha256": "b802142b8b77b05d7ff15f990b0ac48484143c59329b672b68e506d979bf2d73",
-  "release_id": 416977455,
-  "asset_id": 655448383,
-  "publisher_run_id": 39210164274,
-  "verification_run_id": 39209719785,
-  "previous": "bb0f6bb9427ff257097a7d7f85369beb504494644f5ffb8036c0005628878d8f"
+  "generation": 3,
+  "source_sha": "a0725a954715c840fedfb841c0edcd9612636056",
+  "policy_sha256": "919fa383a7e2942fd952ca6a8d5ff8840e44e84ebde37fab50f4ad6e22ab114f",
+  "archive_sha256": "0ff624488c1b5bbff3f0b8a6f27449746bffbc9f6aafba40be091a4d87c4d620",
+  "release_id": 417111051,
+  "asset_id": 655815983,
+  "publisher_run_id": 39229862034,
+  "verification_run_id": 39230155449,
+  "previous": "317fbf25a73f6db161f76205f154c4c44de79c9009fb1e6669871af94999196f"
 }
