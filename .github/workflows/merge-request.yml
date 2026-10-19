@@ -13,14 +13,17 @@ concurrency:
 
 jobs:
   request:
+    # Direct core fixtures have their own isolated controller; native scenarios use other branches.
     if: >-
-      github.event.issue.pull_request &&
+      !startsWith(github.event.pull_request.head.ref, 'securefix-integration-') &&
+      !startsWith(github.event.issue.title, 'test: Securefix ') &&
+      (github.event.issue.pull_request &&
       contains(github.event.comment.body, '/merge') &&
       (github.event.comment.user.id == 4525500 ||
        (github.event.comment.user.id == 29139614 &&
         github.event.comment.user.type == 'Bot' &&
         github.event.issue.user.id == 29139614)) &&
-      github.run_attempt == 1
+      github.run_attempt == 1)
     permissions:
       actions: read
       contents: read
