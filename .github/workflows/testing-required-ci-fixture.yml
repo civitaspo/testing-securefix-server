@@ -1,0 +1,30 @@
+name: testing-Required CI Fixture
+on:
+  workflow_dispatch:
+    inputs:
+      expected_head_sha:
+        description: Exact canonical migration head for this isolated CI fixture
+        type: string
+        required: true
+      outcome:
+        description: Deliberate required-check result; no candidate execution or credentials
+        type: choice
+        options: [failure, success]
+        default: failure
+        required: true
+permissions: {}
+jobs:
+  status-check:
+    if: github.repository == 'civitaspo/testing-securefix-server' && github.actor_id == '4525500' && github.run_attempt == 1 && github.ref == 'refs/heads/automation/testing-securefix-runtime'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    permissions: {}
+    steps:
+      - name: Bind fixture to the exact migration head
+        env:
+          EXPECTED_HEAD: ${{ inputs.expected_head_sha }}
+        run: test "$GITHUB_SHA" = "$EXPECTED_HEAD"
+      - name: Produce the selected required CI result
+        env:
+          OUTCOME: ${{ inputs.outcome }}
+        run: test "$OUTCOME" = success
