@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "generation": 1,
+  "source_sha": "f0a8090a66b05d3c0e048a75e80d2e5fb6374edd",
+  "policy_sha256": "b36d31005bc099b09172af295eeb8b2531c835a6f38cebebf9891498fc5b96ef",
+  "archive_sha256": "814b28ceaf487b7331916aff258b09af634c1010be734c3e70b59cdb16701943",
+  "release_id": 416960439,
+  "asset_id": 655408620,
+  "publisher_run_id": 39208311685,
+  "verification_run_id": 39207675252,
+  "previous": "0000000000000000000000000000000000000000000000000000000000000000"
+}
