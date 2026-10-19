@@ -19,14 +19,11 @@ concurrency:
 
 jobs:
   approve:
-    # Direct core fixtures have their own isolated controller; native scenarios use other branches.
     if: >-
-      !startsWith(github.event.pull_request.head.ref, 'securefix-integration-') &&
-      !startsWith(github.event.issue.title, 'test: Securefix ') &&
-      (github.event_name != 'issue_comment' ||
+      github.event_name != 'issue_comment' ||
       (github.event.issue.pull_request &&
        github.event.comment.user.id == 4525500 &&
-       contains(github.event.comment.body, '/approve')))
+       contains(github.event.comment.body, '/approve'))
     permissions:
       actions: read
       contents: read
