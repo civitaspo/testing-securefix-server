@@ -19,10 +19,6 @@ concurrency:
 
 jobs:
   check:
-    # Direct core fixtures have their own isolated controller; native scenarios use other branches.
-    if: >-
-      !startsWith(github.event.pull_request.head.ref, 'securefix-integration-') &&
-      !startsWith(github.event.issue.title, 'test: Securefix ')
     permissions:
       actions: read
       contents: read
