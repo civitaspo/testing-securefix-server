@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- restore native callers and add required-check fixture (#251)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - isolate direct scratch fixtures from native caller automation (#244)
