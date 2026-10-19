@@ -7,6 +7,8 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- update Securefix workflows to c1195a11ddf07e324f3fc81aadbb55a6935f0d94 (#288)
+- propose reviewed isolated control fixture (#287)
 - controlled Securefix scratch merge
 - retire obsolete Securefix workflow routes (#279)
 
