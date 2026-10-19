@@ -14,6 +14,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- controlled Securefix scratch merge
 - propose reviewed isolated control fixture (#262)
 - controlled Securefix scratch merge
 - propose reviewed isolated control fixture (#255)
