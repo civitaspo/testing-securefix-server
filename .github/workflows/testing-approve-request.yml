@@ -1,4 +1,4 @@
-name: Approve Request
+name: "testing-Approve Request"
 
 on:
   pull_request_target:
@@ -30,6 +30,6 @@ jobs:
       attestations: read
       issues: write
       pull-requests: write
-    uses: civitaspo/securefix-server/.github/workflows/reusable-approve-request.yml@1e2866cbab65c5ef4e218fa6853300c2731e73c0 # v0.2.33
+    uses: civitaspo/securefix-server/.github/workflows/testing-reusable-approve-request.yml@f0a8090a66b05d3c0e048a75e80d2e5fb6374edd # v0.2.34-pre.1
     secrets:
       SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}

@@ -1,0 +1,26 @@
+name: "testing-CI"
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions: {}
+jobs:
+  ok:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - run: exit 0
+  status-check:
+    needs: [ok]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    if: always()
+    steps:
+      - name: Require successful checks
+        env:
+          JOB_RESULT: ${{ needs.ok.result }}
+        run: test "$JOB_RESULT" = success
