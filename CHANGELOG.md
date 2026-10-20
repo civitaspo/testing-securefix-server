@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- verify read-only caller approval and merge receipts (#352)
 - update Securefix workflows to 865a26535fb9a1756bf255df9ecbc58199c66c3f (#351)
 - propose reviewed isolated control fixture (#350)
 - controlled Securefix scratch merge
