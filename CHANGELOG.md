@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.0-pre.6] - 2026-10-20
+
+
+### Miscellaneous
+
+- update Securefix workflows to 2ed0aecd893b8116e15c46b84e01bcece8020f18 (#298)
+- propose reviewed isolated control fixture (#297)
+- controlled Securefix scratch merge
+- controlled Securefix scratch merge
+
 ## [0.1.0-pre.5] - 2026-10-19
 
 
