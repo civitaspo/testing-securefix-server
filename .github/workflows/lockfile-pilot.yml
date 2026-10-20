@@ -1,0 +1,8 @@
+name: Lockfile pilot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  nested:
+    uses: ./.github/workflows/lockfile-pilot-middle.yml
