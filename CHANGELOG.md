@@ -9,6 +9,7 @@ All notable changes to this project will be documented here.
 
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
+- controlled Securefix scratch merge
 - Securefix artifact parser integration (#301)
 - update Securefix workflows to 2ed0aecd893b8116e15c46b84e01bcece8020f18 (#298)
 - propose reviewed isolated control fixture (#297)
