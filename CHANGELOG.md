@@ -7,6 +7,8 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- Securefix artifact parser integration (#316)
+- Securefix stale-head integration 1165be126d58 (#317)
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
