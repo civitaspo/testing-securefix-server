@@ -1,26 +1,48 @@
-name: "testing-CI"
+name: testing-Reaction Permission Probe
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      comment_id:
+        type: string
+        required: true
 permissions: {}
 jobs:
-  ok:
+  issues-only:
+    if: github.repository == 'civitaspo/testing-securefix-server' && github.actor_id == '4525500' && github.ref == 'refs/heads/testing/reaction-permission-20261020' && github.run_attempt == 1
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    permissions: {}
+    timeout-minutes: 3
+    permissions:
+      issues: write
+      pull-requests: read
     steps:
-      - run: exit 0
-  status-check:
-    needs: [ok]
-    runs-on: ubuntu-24.04
-    timeout-minutes: 5
-    permissions: {}
-    if: always()
-    steps:
-      - name: Require successful checks
+      - name: Probe PR comment reaction with this job token
         env:
-          JOB_RESULT: ${{ needs.ok.result }}
-        run: test "$JOB_RESULT" = success
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ inputs.comment_id }}
+        run: gh api --include -X POST "repos/civitaspo/testing-securefix-server/issues/comments/$COMMENT_ID/reactions" -f content=rocket
+  pr-only:
+    if: github.repository == 'civitaspo/testing-securefix-server' && github.actor_id == '4525500' && github.ref == 'refs/heads/testing/reaction-permission-20261020' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      issues: read
+      pull-requests: write
+    steps:
+      - name: Probe PR comment reaction with this job token
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ inputs.comment_id }}
+        run: gh api --include -X POST "repos/civitaspo/testing-securefix-server/issues/comments/$COMMENT_ID/reactions" -f content=rocket
+  both:
+    if: github.repository == 'civitaspo/testing-securefix-server' && github.actor_id == '4525500' && github.ref == 'refs/heads/testing/reaction-permission-20261020' && github.run_attempt == 1
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Probe PR comment reaction with this job token
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMMENT_ID: ${{ inputs.comment_id }}
+        run: gh api --include -X POST "repos/civitaspo/testing-securefix-server/issues/comments/$COMMENT_ID/reactions" -f content=rocket
