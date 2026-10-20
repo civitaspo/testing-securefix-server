@@ -1,6 +1,8 @@
 name: Lockfile pilot
 on:
   workflow_dispatch:
+  push:
+    branches: [experiment/actions-lockfile-pilot]
 permissions:
   contents: read
 jobs:
