@@ -1,1 +1,1 @@
-Bounded recovery merge fixture.
+Advanced fixture head: old acceptance must fail.
