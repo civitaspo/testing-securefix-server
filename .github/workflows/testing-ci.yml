@@ -1,27 +1,27 @@
-name: testing-Legacy Reusable Permission Contract
+name: testing-Current Reusable Permission Contract
 on:
   workflow_dispatch:
 permissions: {}
 jobs:
   approve:
     if: false
-    uses: civitaspo/securefix-server/.github/workflows/reusable-approve-request.yml@f80196051161fe4161c42cd9cb7530cc7db79882 # v0.2.36
+    uses: civitaspo/securefix-server/.github/workflows/reusable-approve-request.yml@d4b6823a9a6a223ab79dd4d115193e2be4325b25 # v0.2.41 repair
     permissions:
       actions: read
       contents: read
       attestations: read
-      issues: read
+      issues: write
       pull-requests: write
     secrets:
       SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
   merge:
     if: false
-    uses: civitaspo/securefix-server/.github/workflows/reusable-merge-request.yml@f80196051161fe4161c42cd9cb7530cc7db79882 # v0.2.36
+    uses: civitaspo/securefix-server/.github/workflows/reusable-merge-request.yml@d4b6823a9a6a223ab79dd4d115193e2be4325b25 # v0.2.41 repair
     permissions:
       actions: read
       contents: read
       attestations: read
-      issues: read
+      issues: write
       pull-requests: write
     secrets:
       SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
