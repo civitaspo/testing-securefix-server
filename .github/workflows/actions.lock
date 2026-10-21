@@ -6,6 +6,7 @@ workflows:
     '.github/workflows/ci.yml': []
     '.github/workflows/fixture-validation.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+    '.github/workflows/native-securefix-producer.yml': []
     '.github/workflows/policy-check.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
         - 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0'
