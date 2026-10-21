@@ -7,6 +7,9 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- align native Securefix candidate artifacts
+- update native Securefix producer pin
+- install reviewed native Securefix producer fixture
 - restore scratch authority config bytes
 - change scratch authority config epoch
 - remove temporary identity probe note
