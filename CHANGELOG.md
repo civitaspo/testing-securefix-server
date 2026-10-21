@@ -7,6 +7,8 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- bind scratch producer signer to its candidate
+- bind native policy probe to authority candidate
 - Reconcile managed scratch files (#381)
 - introduce managed workflow drift fixture
 - use the request producer bundle fix
