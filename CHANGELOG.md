@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- Advance approval producer to lock-fixed reusable (#423)
 - add native approval producer fixture (#421)
 
 ## [0.1.0-pre.5] - 2026-10-19
