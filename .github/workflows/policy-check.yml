@@ -1,0 +1,15 @@
+name: Native Policy Check Scratch Authority
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  authority:
+    if: github.repository == 'civitaspo/testing-securefix-server' && github.actor_id == '4525500' && github.run_attempt == 1 && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    permissions: {}
+    steps:
+      - name: Identify the protected scratch policy-check entry point
+        run: echo 'The source-owned Securefix integration lane exercises the native receiver with a scratch-only Server App token.'
