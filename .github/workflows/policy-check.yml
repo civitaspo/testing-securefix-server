@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       mode:
-        description: Probe token scope, produce an attested request, or consume a completed request
+        description: Probe Git fetch auth, produce an attested request, or consume a completed request
         type: choice
         required: true
         options:
@@ -34,54 +34,42 @@ jobs:
     if: inputs.mode == 'token-probe'
     runs-on: ubuntu-24.04
     permissions:
-      actions: read
       contents: read
-    timeout-minutes: 5
+    timeout-minutes: 2
     steps:
-      - name: Probe scratch installation and exact candidate artifact read access
+      - name: Probe the isolated Basic-auth Git fetch
         env:
-          GH_TOKEN: ${{ github.token }}
-          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          GITHUB_TOKEN: ${{ github.token }}
+          TARGET_SHA: 34613f274abb1862502abf22ae6966c585fbcc88
         run: |
           set -euo pipefail
-          installation_path="$RUNNER_TEMP/installation.json"
-          installation_status="$(curl -sS -o "$installation_path" -w '%{http_code}' \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H 'Accept: application/vnd.github+json' \
-            'https://api.github.com/installation/repositories?per_page=100')"
-          echo "installation_repositories_status=$installation_status"
-          if [[ "$installation_status" == 200 ]]; then
-            jq '{total_count, repositories: [.repositories[] | {id,full_name}]}' "$installation_path"
+          root="$RUNNER_TEMP/securefix-native-git-auth"
+          mkdir -m 700 "$root"
+          mkdir "$root/empty-hooks"
+          printf '%s\n' '[credential]' $'\thelper =' '[http]' $'\tfollowRedirects = false' '[protocol]' $'\tallow = never' '[protocol "https"]' $'\tallow = always' > "$root/global-config"
+          if printf '%s\n' "$GITHUB_TOKEN" | timeout 60s env -i PATH=/usr/bin:/bin PROBE_ROOT="$root" TARGET_SHA="$TARGET_SHA" /bin/bash --noprofile --norc -c '
+            set -euo pipefail
+            root="$PROBE_ROOT"
+            IFS= read -r token
+            encoded="$(printf "x-access-token:%s" "$token" | base64 | tr -d "\\n")"
+            unset token
+            export PATH=/usr/bin:/bin HOME="$root" XDG_CONFIG_HOME="$root" TMPDIR="$root" TMP="$root" TEMP="$root" LANG=C LC_ALL=C
+            export GIT_CONFIG_NOSYSTEM=1 GIT_ATTR_NOSYSTEM=1 GIT_CONFIG_GLOBAL="$root/global-config" GIT_TERMINAL_PROMPT=0 GIT_OPTIONAL_LOCKS=0 GIT_NO_REPLACE_OBJECTS=1
+            export GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$root/empty-hooks" GIT_CONFIG_KEY_1=http.https://github.com/.extraheader GIT_CONFIG_VALUE_1="Authorization: Basic $encoded"
+            unset encoded
+            git init --bare --quiet --template= "$root/repository.git"
+            git -C "$root/repository.git" remote add origin https://github.com/civitaspo/testing-securefix-server.git
+            exec </dev/null
+            git -C "$root/repository.git" fetch --quiet --no-tags --no-recurse-submodules --filter=blob:none origin "$TARGET_SHA"
+            [[ "$(git -C "$root/repository.git" rev-parse --verify FETCH_HEAD^{commit})" == "$TARGET_SHA" ]]
+          ' >/dev/null 2>&1; then
+            echo 'phase=fetch'
+            echo 'success=true'
           else
-            jq '{message,documentation_url}' "$installation_path" 2>/dev/null || true
+            echo 'phase=fetch'
+            echo 'success=false'
+            exit 1
           fi
-          artifact_list="$RUNNER_TEMP/candidate-artifacts.json"
-          artifact_status="$(curl -sS -o "$artifact_list" -w '%{http_code}' \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H 'Accept: application/vnd.github+json' \
-            "https://api.github.com/repos/civitaspo/securefix-server/actions/runs/$CANDIDATE_RUN_ID/artifacts?per_page=100")"
-          echo "candidate_artifact_list_status=$artifact_status"
-          if [[ "$artifact_status" != 200 ]]; then
-            jq '{message,documentation_url}' "$artifact_list" 2>/dev/null || true
-            exit 0
-          fi
-          artifact="$(jq -cer --argjson run_id "$CANDIDATE_RUN_ID" '
-            [.artifacts[] | select(.name == "candidate-runtime" and .workflow_run.id == $run_id and .expired == false)]
-            | if length == 1 then .[0] else empty end' "$artifact_list")"
-          artifact_id="$(jq -r '.id' <<<"$artifact")"
-          expected_digest="$(jq -r '.digest | sub("^sha256:"; "")' <<<"$artifact")"
-          archive="$RUNNER_TEMP/candidate-runtime.zip"
-          download_status="$(curl -sS -L -o "$archive" -w '%{http_code}' \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            -H 'Accept: application/vnd.github+json' \
-            "https://api.github.com/repos/civitaspo/securefix-server/actions/artifacts/$artifact_id/zip")"
-          actual_digest="$(sha256sum "$archive" | cut -d ' ' -f 1)"
-          actual_size="$(stat -c %s "$archive")"
-          echo "candidate_artifact_download_status=$download_status"
-          echo "candidate_artifact_id=$artifact_id"
-          echo "candidate_artifact_digest=$actual_digest"
-          echo "candidate_artifact_size=$actual_size"
-          [[ "$download_status" == 200 && "$actual_digest" == "$expected_digest" && "$actual_size" == "$(jq -r '.size_in_bytes' <<<"$artifact")" ]]
 
   produce:
     if: inputs.mode == 'produce'
