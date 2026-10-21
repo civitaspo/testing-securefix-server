@@ -152,3 +152,4 @@ jobs:
             --manifest "$RUNNER_TEMP/native-policy-check/manifest.json" \
             --bundle "$RUNNER_TEMP/native-policy-check/bundle.json" \
             --publish
+# temporary managed-file drift fixture
