@@ -24,7 +24,7 @@ jobs:
     if: ${{ inputs.case == 'valid' }}
     name: request-producer-proof
     # Placeholder only. Replace the all-zero SHA after reviewing the signed source commit.
-    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@6e81f978f76b7be3ab91a46c8e5d807646a89f52
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@5ee10e27af5e93048deb0d81fc30a9ad87042be4
     permissions:
       contents: read
       id-token: write
