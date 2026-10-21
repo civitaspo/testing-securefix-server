@@ -1,0 +1,29 @@
+name: Native Securefix producer fixture
+
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions: {}
+
+jobs:
+  produce:
+    if: >-
+      github.event.pull_request.user.login == 'civitaspo' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.ref == 'main'
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@d6e353f5fea10766a2dde78081cb824fd2836ade # native producer workflow d6e353f5fea10766a2dde78081cb824fd2836ade
+    with:
+      operation: securefix
+      candidate_run_id: '39604246654'
+      candidate_source_sha: 7b5da5d248078c774d44d54a0e7fd145ddf67fd7
+      pull_request_number: ${{ github.event.pull_request.number }}
+      server_repository: civitaspo/securefix-server
+      instance_config_path: repo-settings/native-securefix-test-instance.toml
+    permissions:
+      actions: read
+      attestations: write
+      contents: read
+      id-token: write
+      pull-requests: read
