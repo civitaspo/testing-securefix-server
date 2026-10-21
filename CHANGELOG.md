@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented here.
 
-## [0.1.0-pre.6] - 2026-10-20
+## [0.1.0-pre.6] - 2026-10-21
 
 
 ### Miscellaneous
 
+- controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - verify read-only caller approval and merge receipts (#352)
