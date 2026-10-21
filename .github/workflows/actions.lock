@@ -9,7 +9,7 @@ workflows:
     '.github/workflows/policy-check.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
         - 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0'
-        - 'civitaspo/securefix-server@25f81dbe543a3b31bc415a120377087caa0d8236'
+        - 'civitaspo/securefix-server@bb260267f65386d5f32bc585bda3090b8b4b7191'
     '.github/workflows/testing-approve-request.yml': []
     '.github/workflows/testing-ci.yml': []
     '.github/workflows/testing-merge-request.yml': []
@@ -29,8 +29,8 @@ dependencies:
         commit: 'sha1-634f93cb2916e3fdff6788551b99b062d0335ce0'
         owner_id: 44036562
         repo_id: 192626254
-    'civitaspo/securefix-server@25f81dbe543a3b31bc415a120377087caa0d8236':
+    'civitaspo/securefix-server@bb260267f65386d5f32bc585bda3090b8b4b7191':
         ref: 'integration/native-managed-files-c80e'
-        commit: 'sha1-25f81dbe543a3b31bc415a120377087caa0d8236'
+        commit: 'sha1-bb260267f65386d5f32bc585bda3090b8b4b7191'
         owner_id: 4525500
         repo_id: 1250079425
