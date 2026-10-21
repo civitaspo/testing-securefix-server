@@ -25,7 +25,7 @@ jobs:
       github.ref == 'refs/heads/main' &&
       github.actor_id == '4525500' &&
       github.run_attempt == 1
-    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@aaccc219b53ad93614bd87c5c9d0dd0de074bd8c # securefix-server v0.2.45-pre.8
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@7b4219725c0e581b73dc9291f12fadda56a05c63 # securefix-server v0.2.45-pre.8
     with:
       operation: approval
       candidate_run_id: ${{ inputs.candidate_run_id }}
