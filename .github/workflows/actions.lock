@@ -6,6 +6,10 @@ workflows:
     '.github/workflows/ci.yml': []
     '.github/workflows/fixture-validation.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+    '.github/workflows/policy-check.yml':
+        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+        - 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0'
+        - 'civitaspo/securefix-server@b768d70eb58fcc60ade1e714746a69fe2e35722e'
     '.github/workflows/testing-approve-request.yml': []
     '.github/workflows/testing-ci.yml': []
     '.github/workflows/testing-merge-request.yml': []
@@ -20,3 +24,13 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
+    'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0':
+        ref: 'v5.0.0'
+        commit: 'sha1-634f93cb2916e3fdff6788551b99b062d0335ce0'
+        owner_id: 44036562
+        repo_id: 192626254
+    'civitaspo/securefix-server@b768d70eb58fcc60ade1e714746a69fe2e35722e':
+        ref: 'integration/native-policy-check-c80e'
+        commit: 'sha1-b768d70eb58fcc60ade1e714746a69fe2e35722e'
+        owner_id: 4525500
+        repo_id: 1250079425
