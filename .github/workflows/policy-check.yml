@@ -119,7 +119,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: civitaspo/securefix-server
-          ref: c9539321a9e0cd289f62c2681f28b58024b02041
+          ref: f97fdf804731cff005634c0d2ca811be11a26743
           path: server-source
           persist-credentials: false
       - name: Require the exact source-bound candidate artifact
@@ -133,7 +133,7 @@ jobs:
           set -euo pipefail
           GITHUB_WORKSPACE="$GITHUB_WORKSPACE/server-source" bash "$ACTION_PATH/reuse-build.sh"
           grep -qx "reused=true" "$GITHUB_OUTPUT"
-      - uses: civitaspo/securefix-server/.github/actions/install-cli@c9539321a9e0cd289f62c2681f28b58024b02041 # source commit
+      - uses: civitaspo/securefix-server/.github/actions/install-cli@f97fdf804731cff005634c0d2ca811be11a26743 # source commit
         with:
           binary: ${{ github.workspace }}/server-source/target/release/securefix
       - name: Verify and publish the exact current-head policy check
