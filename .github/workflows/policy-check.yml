@@ -85,7 +85,7 @@ jobs:
 
   produce:
     if: inputs.mode == 'produce'
-    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@b768d70eb58fcc60ade1e714746a69fe2e35722e
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@961ffff5ab30be4a0197c64c9a4170515b787f5f
     with:
       candidate_run_id: ${{ inputs.candidate_run_id }}
       pull_request_number: ${{ inputs.pull_request_number }}
@@ -119,7 +119,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: civitaspo/securefix-server
-          ref: b768d70eb58fcc60ade1e714746a69fe2e35722e
+          ref: 961ffff5ab30be4a0197c64c9a4170515b787f5f
           path: server-source
           persist-credentials: false
       - name: Require the exact source-bound candidate artifact
@@ -133,7 +133,7 @@ jobs:
           set -euo pipefail
           GITHUB_WORKSPACE="$GITHUB_WORKSPACE/server-source" bash "$ACTION_PATH/reuse-build.sh"
           grep -qx "reused=true" "$GITHUB_OUTPUT"
-      - uses: civitaspo/securefix-server/.github/actions/install-cli@b768d70eb58fcc60ade1e714746a69fe2e35722e # source commit
+      - uses: civitaspo/securefix-server/.github/actions/install-cli@961ffff5ab30be4a0197c64c9a4170515b787f5f # source commit
         with:
           binary: ${{ github.workspace }}/server-source/target/release/securefix
       - name: Verify and publish the exact current-head policy check
