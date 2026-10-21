@@ -34,42 +34,55 @@ jobs:
     if: inputs.mode == 'token-probe'
     runs-on: ubuntu-24.04
     permissions:
+      actions: read
       contents: read
-    timeout-minutes: 2
+      pull-requests: read
+    timeout-minutes: 10
     steps:
-      - name: Probe the isolated Basic-auth Git fetch
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5.0.0
+        with:
+          name: native-request-proof
+          repository: civitaspo/testing-securefix-server
+          run-id: ${{ inputs.producer_run_id }}
+          github-token: ${{ github.token }}
+          path: ${{ runner.temp }}/native-policy-check
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: civitaspo/securefix-server
+          ref: bb260267f65386d5f32bc585bda3090b8b4b7191
+          path: server-source
+          persist-credentials: false
+      - name: Require the exact source-bound candidate artifact
         env:
-          GITHUB_TOKEN: ${{ github.token }}
-          TARGET_SHA: 34613f274abb1862502abf22ae6966c585fbcc88
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          ACTION_PATH: ${{ github.workspace }}/server-source/.github/actions/setup-cli
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
         run: |
           set -euo pipefail
-          root="$RUNNER_TEMP/securefix-native-git-auth"
-          mkdir -m 700 "$root"
-          mkdir "$root/empty-hooks"
-          printf '%s\n' '[credential]' $'\thelper =' '[http]' $'\tfollowRedirects = false' '[protocol]' $'\tallow = never' '[protocol "https"]' $'\tallow = always' > "$root/global-config"
-          if printf '%s\n' "$GITHUB_TOKEN" | timeout 60s env -i PATH=/usr/bin:/bin PROBE_ROOT="$root" TARGET_SHA="$TARGET_SHA" /bin/bash --noprofile --norc -c '
-            set -euo pipefail
-            root="$PROBE_ROOT"
-            IFS= read -r token
-            encoded="$(printf "x-access-token:%s" "$token" | base64 | tr -d "\\n")"
-            unset token
-            export PATH=/usr/bin:/bin HOME="$root" XDG_CONFIG_HOME="$root" TMPDIR="$root" TMP="$root" TEMP="$root" LANG=C LC_ALL=C
-            export GIT_CONFIG_NOSYSTEM=1 GIT_ATTR_NOSYSTEM=1 GIT_CONFIG_GLOBAL="$root/global-config" GIT_TERMINAL_PROMPT=0 GIT_OPTIONAL_LOCKS=0 GIT_NO_REPLACE_OBJECTS=1
-            export GIT_CONFIG_COUNT=2 GIT_CONFIG_KEY_0=core.hooksPath GIT_CONFIG_VALUE_0="$root/empty-hooks" GIT_CONFIG_KEY_1=http.https://github.com/.extraheader GIT_CONFIG_VALUE_1="Authorization: Basic $encoded"
-            unset encoded
-            git init --bare --quiet --template= "$root/repository.git"
-            git -C "$root/repository.git" remote add origin https://github.com/civitaspo/testing-securefix-server.git
-            exec </dev/null
-            git -C "$root/repository.git" fetch --quiet --no-tags --no-recurse-submodules --filter=blob:none origin "$TARGET_SHA"
-            [[ "$(git -C "$root/repository.git" rev-parse --verify FETCH_HEAD^{commit})" == "$TARGET_SHA" ]]
-          ' >/dev/null 2>&1; then
-            echo 'phase=fetch'
-            echo 'success=true'
-          else
-            echo 'phase=fetch'
-            echo 'success=false'
-            exit 1
-          fi
+          GITHUB_WORKSPACE="$GITHUB_WORKSPACE/server-source" bash "$ACTION_PATH/reuse-build.sh"
+          grep -qx "reused=true" "$GITHUB_OUTPUT"
+      - uses: civitaspo/securefix-server/.github/actions/install-cli@bb260267f65386d5f32bc585bda3090b8b4b7191 # source commit
+        with:
+          binary: ${{ github.workspace }}/server-source/target/release/securefix
+      - name: Verify the exact request without publishing a check
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          CANDIDATE_RUN_ID: ${{ inputs.candidate_run_id }}
+          PRODUCER_RUN_ID: ${{ inputs.producer_run_id }}
+        run: |
+          set -euo pipefail
+          test "$CANDIDATE_RUN_ID" -gt 0
+          test "$PRODUCER_RUN_ID" -gt 0
+          securefix new-server policy-check \
+            --config securefix-server.toml \
+            --config-path securefix-server.toml \
+            --manifest "$RUNNER_TEMP/native-policy-check/manifest.json" \
+            --bundle "$RUNNER_TEMP/native-policy-check/bundle.json"
+
 
   produce:
     if: inputs.mode == 'produce'
