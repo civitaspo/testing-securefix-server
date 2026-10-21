@@ -1,0 +1,20 @@
+name: Release PR Sync
+
+on:
+  # Managed release PR updates already synchronize their title and body.
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: release-pr-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    permissions:
+      actions: read
+      contents: read
+      attestations: read
+      pull-requests: write
+    uses: civitaspo/securefix-server/.github/workflows/reusable-release-pr-sync.yml@1b35591e74eeae8fe848d16c6fcae0ba8fb75f6c # v0.2.44
