@@ -3,14 +3,20 @@
 # Docs: https://gh.io/actions-lockfile
 version: 'v0.0.3'
 workflows:
-    '.github/workflows/ci.yml': []
+    '.github/workflows/approve-request.yml': []
+    '.github/workflows/ci.yml':
+        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+        - 'jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca'
     '.github/workflows/fixture-validation.yml':
         - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+    '.github/workflows/merge-request.yml': []
     '.github/workflows/native-securefix-producer.yml': []
-    '.github/workflows/policy-check.yml':
-        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
-        - 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0'
-        - 'civitaspo/securefix-server@96c2f3e9223f7f5f357660e59718558f3e2b283b'
+    '.github/workflows/policy-check.yml': []
+    '.github/workflows/pull_request.yml': []
+    '.github/workflows/push.yml': []
+    '.github/workflows/release-pr-sync.yml': []
+    '.github/workflows/release-pr.yml': []
+    '.github/workflows/release-tag.yml': []
     '.github/workflows/testing-approve-request.yml': []
     '.github/workflows/testing-ci.yml': []
     '.github/workflows/testing-merge-request.yml': []
@@ -19,19 +25,38 @@ workflows:
     '.github/workflows/testing-release-pr.yml': []
     '.github/workflows/testing-release-tag.yml': []
     '.github/workflows/testing-required-ci-fixture.yml': []
+    '.github/workflows/wc-autofix.yml':
+        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
+        - 'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510'
+        - 'civitaspo/securefix-server@1b35591e74eeae8fe848d16c6fcae0ba8fb75f6c'
+    '.github/workflows/workflow_call_pr.yml': []
+    '.github/workflows/workflow_call_push.yml':
+        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
 dependencies:
     'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0':
-        ref: 'v5.0.0'
-        commit: 'sha1-634f93cb2916e3fdff6788551b99b062d0335ce0'
+    'actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510':
+        ref: 'v3.3.0'
+        commit: 'sha1-64ab729a6294000f5aa4a4bc0b73d1f32bc45510'
         owner_id: 44036562
-        repo_id: 192626254
-    'civitaspo/securefix-server@96c2f3e9223f7f5f357660e59718558f3e2b283b':
-        ref: 'integration/native-managed-files-c80e'
-        commit: 'sha1-96c2f3e9223f7f5f357660e59718558f3e2b283b'
+        repo_id: 642580244
+    'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02':
+        ref: 'v4.6.2'
+        commit: 'sha1-ea165f8d65b6e75b540449e92b4886f43607fa02'
+        owner_id: 44036562
+        repo_id: 192625955
+    'civitaspo/securefix-server@1b35591e74eeae8fe848d16c6fcae0ba8fb75f6c':
+        ref: 'v0.2.44'
+        commit: 'sha1-1b35591e74eeae8fe848d16c6fcae0ba8fb75f6c'
         owner_id: 4525500
         repo_id: 1250079425
+        uses:
+            - 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02'
+    'jdx/mise-action@2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca':
+        ref: 'v5.1.1'
+        commit: 'sha1-2d8d4cafcbd33be2ea37d2b6f5ad595363d1f1ca'
+        owner_id: 216188
+        repo_id: 738284564
