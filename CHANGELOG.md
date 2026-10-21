@@ -2,50 +2,12 @@
 
 All notable changes to this project will be documented here.
 
-## [0.1.0-pre.6] - 2026-10-21
+## [0.2.45-pre.8] - 2026-10-21
 
 
 ### Miscellaneous
 
-- align native Securefix candidate artifacts
-- update native Securefix producer pin
-- install reviewed native Securefix producer fixture
-- restore scratch authority config bytes
-- change scratch authority config epoch
-- remove temporary identity probe note
-- verify unrelated documentation identity stability
-- restore scratch authority config bytes
-- change scratch authority config epoch
-- bind scratch producer signer to its candidate
-- bind native policy probe to authority candidate
-- Reconcile managed scratch files (#381)
-- introduce managed workflow drift fixture
-- use the request producer bundle fix
-- repin native producer probe source
-- repin native policy probe to locked source
-- add native policy-check scratch probe
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
-- verify read-only caller approval and merge receipts (#352)
-- update Securefix workflows to 865a26535fb9a1756bf255df9ecbc58199c66c3f (#351)
-- propose reviewed isolated control fixture (#350)
-- controlled Securefix scratch merge
-- propose reviewed isolated control fixture (#346)
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
-- Securefix stale-head integration dd1f4ec65058 (#320)
-- Securefix artifact parser integration (#319)
-- Securefix artifact parser integration (#316)
-- Securefix stale-head integration 1165be126d58 (#317)
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
-- Securefix artifact parser integration (#301)
-- update Securefix workflows to 2ed0aecd893b8116e15c46b84e01bcece8020f18 (#298)
-- propose reviewed isolated control fixture (#297)
-- controlled Securefix scratch merge
-- controlled Securefix scratch merge
+- add native approval producer fixture (#421)
 
 ## [0.1.0-pre.5] - 2026-10-19
 
