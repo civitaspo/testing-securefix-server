@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- introduce managed workflow drift fixture
 - use the request producer bundle fix
 - repin native producer probe source
 - repin native policy probe to locked source
