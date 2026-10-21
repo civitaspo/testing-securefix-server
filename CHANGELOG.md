@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- pin native producer to corrected Server source (#424)
 - Advance approval producer to lock-fixed reusable (#423)
 - add native approval producer fixture (#421)
 
