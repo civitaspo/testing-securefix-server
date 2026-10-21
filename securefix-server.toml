@@ -65,5 +65,3 @@ repository = "civitaspo/securefix-server"
 id = 1250079425
 producer_workflow = ".github/workflows/request-producer-probe.yml"
 version = ">=0.1.0"
-
-# temporary authority epoch test
