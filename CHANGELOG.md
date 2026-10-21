@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- add native policy-check scratch probe
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
 - controlled Securefix scratch merge
