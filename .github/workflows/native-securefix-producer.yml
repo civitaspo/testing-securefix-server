@@ -13,7 +13,7 @@ jobs:
       github.event.pull_request.user.login == 'civitaspo' &&
       github.event.pull_request.head.repo.full_name == github.repository &&
       github.event.pull_request.base.ref == 'main'
-    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@d6e353f5fea10766a2dde78081cb824fd2836ade # native producer workflow d6e353f5fea10766a2dde78081cb824fd2836ade
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@c0c9c5f86349b7f822b8b0a45e9dd1f88a2e6cbe # native producer workflow c0c9c5f86349b7f822b8b0a45e9dd1f88a2e6cbe
     with:
       operation: securefix
       candidate_run_id: '39604246654'
