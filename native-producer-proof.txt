@@ -1,0 +1,1 @@
+native producer proof fixture
