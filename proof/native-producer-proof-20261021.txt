@@ -1,0 +1,2 @@
+native producer proof fixture
+created 2026-10-21
