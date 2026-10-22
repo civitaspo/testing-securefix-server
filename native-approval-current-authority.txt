@@ -1,0 +1,1 @@
+native approval proof fixture for current package authority
