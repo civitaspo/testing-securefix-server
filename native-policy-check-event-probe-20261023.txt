@@ -1,0 +1,1 @@
+Scratch-only owner-authored fixture for the read-only policy-check event probe.
