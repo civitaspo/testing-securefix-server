@@ -1,0 +1,41 @@
+name: Native owner merge request producer
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_run_id:
+        description: Successful Server run with the source-bound Client build artifact
+        required: true
+        type: string
+      candidate_source_sha:
+        description: Exact merged Server source SHA represented by that artifact
+        required: true
+        type: string
+      pull_request_number:
+        description: Exact owner-authored scratch PR to bind to the request
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  produce:
+    if: >-
+      github.repository == 'civitaspo/testing-securefix-server' &&
+      github.ref == 'refs/heads/main' &&
+      github.actor_id == '4525500' &&
+      github.run_attempt == 1
+    uses: civitaspo/securefix-server/.github/workflows/request-producer-probe.yml@0bb81381250d6c23975c3350ecd0c69a2897b41e # securefix-server source v0.2.45-pre.11 (unreleased)
+    with:
+      operation: merge
+      candidate_run_id: ${{ inputs.candidate_run_id }}
+      candidate_source_sha: ${{ inputs.candidate_source_sha }}
+      pull_request_number: ${{ inputs.pull_request_number }}
+      server_repository: civitaspo/securefix-server
+      instance_config_path: repo-settings/native-securefix-test-instance.toml
+    permissions:
+      actions: read
+      attestations: write
+      contents: read
+      id-token: write
+      pull-requests: read
