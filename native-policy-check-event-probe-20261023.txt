@@ -1,1 +1,2 @@
 Scratch-only owner-authored fixture for the read-only policy-check event probe.
+Protected config update ce5588a7c193f279f70472516c990d758b8a0fe2.
