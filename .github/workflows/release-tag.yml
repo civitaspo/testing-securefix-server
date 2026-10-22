@@ -1,4 +1,4 @@
-name: "testing-Release Tag"
+name: Release Tag
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       release_pr_number:
-        description: Merged release/testing-next PR to retry
+        description: Merged release PR to retry
         required: true
         type: number
 
@@ -19,15 +19,18 @@ concurrency:
 
 jobs:
   tag:
-    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged && github.event.pull_request.head.ref == 'release/testing-next' && github.event.pull_request.head.repo.full_name == github.repository)
+    if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged && github.event.pull_request.head.repo.full_name == github.repository)
     permissions:
       actions: read
+      attestations: write
       contents: write
-      attestations: read
-      pull-requests: read
+      id-token: write
       issues: write
-    uses: civitaspo/securefix-server/.github/workflows/testing-reusable-release-tag.yml@865a26535fb9a1756bf255df9ecbc58199c66c3f # v0.2.43-pre.2
+      pull-requests: read
+    uses: civitaspo/securefix-server/.github/workflows/reusable-release-tag.yml@3b88bcd0e228791e355aec238d5c7e95027b3f6f # v0.2.45-pre.23
     with:
       release_pr_number: ${{ fromJSON(format('{0}', inputs.release_pr_number || github.event.pull_request.number || 0)) }}
+      server_repository: "civitaspo/testing-securefix-server"
+      instance_config_path: "securefix-server.toml"
     secrets:
       SECUREFIX_CLIENT_PRIVATE_KEY: ${{ secrets.SECUREFIX_CLIENT_PRIVATE_KEY }}
