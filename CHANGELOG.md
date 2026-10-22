@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented here.
 
+## [0.2.45-pre.8] - 2026-10-22
+
+
+### Miscellaneous
+
+- add native approval target fixture (#422)
+- wire native approval and merge producers to Server pre11 (#425)
+- pin native producer to corrected Server source (#424)
+- Advance approval producer to lock-fixed reusable (#423)
+- add native approval producer fixture (#421)
+
 ## [0.1.0-pre.5] - 2026-10-19
 
 
