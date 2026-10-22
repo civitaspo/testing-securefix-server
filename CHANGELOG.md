@@ -7,6 +7,7 @@ All notable changes to this project will be documented here.
 
 ### Miscellaneous
 
+- add native approval target fixture (#422)
 - wire native approval and merge producers to Server pre11 (#425)
 - pin native producer to corrected Server source (#424)
 - Advance approval producer to lock-fixed reusable (#423)
