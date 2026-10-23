@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented here.
 
+## [0.2.45-pre.110] - 2026-10-23
+
+
+### Miscellaneous
+
+- Reconcile managed files (#454)
+
 ## [0.2.45-pre.101] - 2026-10-23
 
 
