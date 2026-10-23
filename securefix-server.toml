@@ -65,10 +65,24 @@ repository = "civitaspo/testing-securefix-server"
 id = 1410312556
 capabilities = ["approve", "merge", "release", "securefix"]
 release = "github-release"
+native_binaries = [
+  { target = "aarch64-apple-darwin", runner = "macos-15" },
+  { target = "x86_64-apple-darwin", runner = "macos-15-intel" },
+  { target = "aarch64-unknown-linux-musl", runner = "ubuntu-24.04-arm" },
+  { target = "x86_64-unknown-linux-musl", runner = "ubuntu-24.04" },
+]
 protect_tags = false
 
 [acceptable_clients]
 repository = "civitaspo/securefix-server"
 id = 1250079425
-producer_workflow = ".github/workflows/reusable-client-request.yml"
+producer_workflow = ".github/workflows/reusable-client-request-scratch.yml"
 version = ">=0.2.45-pre.23"
+
+[[scratch_request_callers]]
+repository = "civitaspo/testing-securefix-server"
+id = 1410312556
+workflow_path = ".github/workflows/securefix-request.yml"
+workflow_ref = "refs/heads/main"
+event = "pull_request_target"
+operation = "securefix"
