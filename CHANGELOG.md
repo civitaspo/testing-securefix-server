@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented here.
 
+## [0.1.0-pre.55] - 2026-10-23
+
+- Qualify the external native Release Tag and Server publication route for four targets.
+
 ## [0.1.0-pre.5] - 2026-10-19
 
 
