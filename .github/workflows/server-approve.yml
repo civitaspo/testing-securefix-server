@@ -8,6 +8,10 @@ permissions: {}
 
 jobs:
   handler:
+    concurrency:
+      group: securefix-control
+      cancel-in-progress: false
+      queue: max
     if: startsWith(github.event.label.name, 'securefix-native-approve-')
     permissions:
       actions: read
@@ -17,7 +21,7 @@ jobs:
       pull-requests: read
       checks: read
       statuses: read
-    uses: civitaspo/securefix-server/.github/workflows/reusable-server-approve.yml@5577e7d6735c869b7ac4f77a14eeaa32f03d01de # v0.2.45-pre.27 (candidate source)
+    uses: civitaspo/securefix-server/.github/workflows/reusable-server-approve.yml@61c17deefa8877f62c9f593421fd078a75b01608 # v0.2.45-pre.77 (candidate source)
     with:
       config_path: securefix-server.toml
     secrets:
