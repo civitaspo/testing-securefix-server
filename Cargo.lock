@@ -4,4 +4,4 @@ version = 4
 
 [[package]]
 name = "testing-securefix-server"
-version = "0.1.0-pre.55"
+version = "0.1.0-pre.59"
