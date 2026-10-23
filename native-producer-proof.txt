@@ -1,1 +1,1 @@
-native generic Client proof fixture
+native producer proof fixture
