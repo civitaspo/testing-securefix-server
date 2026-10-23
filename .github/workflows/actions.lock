@@ -9,18 +9,15 @@ workflows:
     '.github/workflows/native-approval-producer.yml': []
     '.github/workflows/native-merge-producer.yml': []
     '.github/workflows/native-securefix-producer.yml': []
-    '.github/workflows/policy-check.yml':
-        - 'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1'
-        - 'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0'
-        - 'civitaspo/securefix-server@96c2f3e9223f7f5f357660e59718558f3e2b283b'
+    '.github/workflows/policy-check.yml': []
+    '.github/workflows/release-tag.yml': []
     '.github/workflows/securefix-request.yml': []
-    '.github/workflows/testing-approve-request.yml': []
+    '.github/workflows/server-approve.yml': []
+    '.github/workflows/server-merge.yml': []
+    '.github/workflows/server-policy-check.yml': []
+    '.github/workflows/server-release.yml': []
+    '.github/workflows/server-securefix.yml': []
     '.github/workflows/testing-ci.yml': []
-    '.github/workflows/testing-merge-request.yml': []
-    '.github/workflows/testing-policy-check.yml': []
-    '.github/workflows/testing-release-pr-sync.yml': []
-    '.github/workflows/testing-release-pr.yml': []
-    '.github/workflows/testing-release-tag.yml': []
     '.github/workflows/testing-required-ci-fixture.yml': []
 dependencies:
     'actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1':
@@ -28,13 +25,3 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0':
-        ref: 'v5.0.0'
-        commit: 'sha1-634f93cb2916e3fdff6788551b99b062d0335ce0'
-        owner_id: 44036562
-        repo_id: 192626254
-    'civitaspo/securefix-server@96c2f3e9223f7f5f357660e59718558f3e2b283b':
-        ref: 'integration/native-managed-files-c80e'
-        commit: 'sha1-96c2f3e9223f7f5f357660e59718558f3e2b283b'
-        owner_id: 4525500
-        repo_id: 1250079425
